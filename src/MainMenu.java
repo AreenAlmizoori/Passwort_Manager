@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -27,18 +28,28 @@ public class MainMenu extends Application {
 
         //Left Element
         AnchorPane anchorPaneLeft = new AnchorPane();
+        Label categoryOptions = new Label("Category Options:");
         Button addCategory = new Button("+");
         Button removeCategory = new Button("-");
-        anchorPaneLeft.getChildren().addAll(addCategory, removeCategory);
+        anchorPaneLeft.getChildren().addAll(addCategory, removeCategory, categoryOptions);
         mainMenu.setLeft(anchorPaneLeft);
 
-        //Button placement and width
+        //Button und Label placement and width
+        categoryOptions.setLayoutX(0);
+        categoryOptions.setLayoutY(30);
         addCategory.setLayoutX(0);
         addCategory.setLayoutY(50);
         removeCategory.setLayoutX(40);
         removeCategory.setLayoutY(50);
         addCategory.setPrefWidth(30);
         removeCategory.setPrefWidth(30);
+
+        //Button Tooltip
+        Tooltip addCatTooltip = new Tooltip("Click this to create a new Category");
+        Tooltip remCatTooltip = new Tooltip("Click this to remove a Category");
+        addCategory.setTooltip(addCatTooltip);
+        removeCategory.setTooltip(remCatTooltip);
+
 
 
 
