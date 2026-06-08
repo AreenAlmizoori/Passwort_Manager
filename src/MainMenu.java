@@ -34,7 +34,7 @@ public class MainMenu extends Application {
         anchorPaneLeft.getChildren().addAll(addCategory, removeCategory, categoryOptions);
         mainMenu.setLeft(anchorPaneLeft);
 
-        //Button und Label placement and width
+        //Button und Label placement and width (for anchorPaneLeft)
         categoryOptions.setLayoutX(0);
         categoryOptions.setLayoutY(30);
         addCategory.setLayoutX(0);
@@ -50,9 +50,23 @@ public class MainMenu extends Application {
         addCategory.setTooltip(addCatTooltip);
         removeCategory.setTooltip(remCatTooltip);
 
+        //Right Element
+        AnchorPane anchorPaneRight = new AnchorPane();
+        Label entryOptions = new Label("Entry Options:");
+        Button addEntry = new Button("+");
+        Button removeEntry = new Button("-");
+        anchorPaneRight.getChildren().addAll(addEntry, removeEntry, entryOptions);
+        mainMenu.setRight(anchorPaneRight);
 
-
-
+        //Button und Label placement and width (for anchorPaneRight)
+        entryOptions.setLayoutX(690);
+        entryOptions.setLayoutY(30);
+        addEntry.setLayoutX(690);
+        addEntry.setLayoutY(50);
+        removeEntry.setLayoutX(730);
+        removeEntry.setLayoutY(50);
+        addEntry.setPrefWidth(30);
+        removeEntry.setPrefWidth(30);
 
         stage.setTitle("Password Manager");
         stage.setScene(scene);
