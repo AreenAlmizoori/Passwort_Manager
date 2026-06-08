@@ -44,7 +44,7 @@ public class MainMenu extends Application {
         addCategory.setPrefWidth(30);
         removeCategory.setPrefWidth(30);
 
-        //Button Tooltip
+        //Button Tooltip (for anchorPaneLeft)
         Tooltip addCatTooltip = new Tooltip("Click this to create a new Category");
         Tooltip remCatTooltip = new Tooltip("Click this to remove a Category");
         addCategory.setTooltip(addCatTooltip);
@@ -67,6 +67,12 @@ public class MainMenu extends Application {
         removeEntry.setLayoutY(50);
         addEntry.setPrefWidth(30);
         removeEntry.setPrefWidth(30);
+
+        //Button Tooltip (for anchorPaneRight)
+        Tooltip addEntTooltip = new Tooltip("Click this to create a new Entry");
+        Tooltip remEntTooltip = new Tooltip("Click this to remove an Entry");
+        addEntry.setTooltip(addEntTooltip);
+        removeEntry.setTooltip(remEntTooltip);
 
         stage.setTitle("Password Manager");
         stage.setScene(scene);
