@@ -6,6 +6,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainMenu extends Application {
@@ -25,6 +26,7 @@ public class MainMenu extends Application {
         Label programName = new Label("Password Manager.");
         topArea.getChildren().add(programName);
         mainMenu.setTop(topArea);
+        topArea.setPrefSize(900, 50);
 
         //Left Element
         AnchorPane anchorPaneLeft = new AnchorPane();
@@ -73,6 +75,13 @@ public class MainMenu extends Application {
         Tooltip remEntTooltip = new Tooltip("Click this to remove an Entry");
         addEntry.setTooltip(addEntTooltip);
         removeEntry.setTooltip(remEntTooltip);
+
+        //Center Element
+        VBox categories = new VBox();
+        Button mainCategory = new Button("Main");
+        categories.getChildren().add(mainCategory);
+        mainMenu.setCenter(categories);
+
 
         stage.setTitle("Password Manager");
         stage.setScene(scene);
