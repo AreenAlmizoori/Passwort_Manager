@@ -18,15 +18,29 @@ public class MainMenu extends Application {
         BorderPane mainMenu = new BorderPane();
         Scene scene = new Scene(mainMenu, 900, 500);
 
+        //BorderPane Elements
         //Top Element
         HBox topArea = new HBox();
         Label programName = new Label("Password Manager.");
         topArea.getChildren().add(programName);
+        mainMenu.setTop(topArea);
 
         //Left Element
         AnchorPane anchorPaneLeft = new AnchorPane();
         Button addCategory = new Button("+");
         Button removeCategory = new Button("-");
+        anchorPaneLeft.getChildren().addAll(addCategory, removeCategory);
+        mainMenu.setLeft(anchorPaneLeft);
+
+        //Button placement and width
+        addCategory.setLayoutX(0);
+        addCategory.setLayoutY(50);
+        removeCategory.setLayoutX(40);
+        removeCategory.setLayoutY(50);
+        addCategory.setPrefWidth(30);
+        removeCategory.setPrefWidth(30);
+
+
 
 
         stage.setTitle("Password Manager");
