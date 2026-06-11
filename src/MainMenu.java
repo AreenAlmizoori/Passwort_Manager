@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,7 +27,7 @@ public class MainMenu extends Application {
         Label programName = new Label("Password Manager.");
         topArea.getChildren().add(programName);
         mainMenu.setTop(topArea);
-        topArea.setPrefSize(900, 50);
+        topArea.setPrefSize(900, 30);
 
         //Left Element
         AnchorPane anchorPaneLeft = new AnchorPane();
@@ -38,11 +39,11 @@ public class MainMenu extends Application {
 
         //Button und Label placement and width (for anchorPaneLeft)
         categoryOptions.setLayoutX(0);
-        categoryOptions.setLayoutY(30);
+        categoryOptions.setLayoutY(20);
         addCategory.setLayoutX(0);
-        addCategory.setLayoutY(50);
+        addCategory.setLayoutY(40);
         removeCategory.setLayoutX(40);
-        removeCategory.setLayoutY(50);
+        removeCategory.setLayoutY(40);
         addCategory.setPrefWidth(30);
         removeCategory.setPrefWidth(30);
 
@@ -61,12 +62,12 @@ public class MainMenu extends Application {
         mainMenu.setRight(anchorPaneRight);
 
         //Button und Label placement and width (for anchorPaneRight)
-        entryOptions.setLayoutX(690);
-        entryOptions.setLayoutY(30);
-        addEntry.setLayoutX(690);
-        addEntry.setLayoutY(50);
-        removeEntry.setLayoutX(730);
-        removeEntry.setLayoutY(50);
+        entryOptions.setLayoutX(680);
+        entryOptions.setLayoutY(20);
+        addEntry.setLayoutX(680);
+        addEntry.setLayoutY(40);
+        removeEntry.setLayoutX(720);
+        removeEntry.setLayoutY(40);
         addEntry.setPrefWidth(30);
         removeEntry.setPrefWidth(30);
 
@@ -81,6 +82,7 @@ public class MainMenu extends Application {
         Button mainCategory = new Button("Main");
         categories.getChildren().add(mainCategory);
         mainMenu.setCenter(categories);
+        categories.setPadding(new Insets(20,10,0,10));
 
 
         stage.setTitle("Password Manager");
