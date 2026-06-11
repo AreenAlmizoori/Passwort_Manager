@@ -54,6 +54,12 @@ public class MainMenu extends Application {
         removeCategory.setLayoutX(45);
         removeCategory.setLayoutY(20);
 
+        //Tooltips for left elements
+        Tooltip addCatTooltip = new Tooltip("Click this to add a new category");
+        Tooltip remCatTooltip = new Tooltip("Click this to remove a category");
+        addCategory.setTooltip(addCatTooltip);
+        removeCategory.setTooltip(remCatTooltip);
+
 
         //BorderPane Center Element
         VBox centerArea = new VBox();
@@ -89,6 +95,12 @@ public class MainMenu extends Application {
         addEntry.setLayoutY(20);
         removeEntry.setLayoutX(45);
         removeEntry.setLayoutY(20);
+
+        //Tooltips for right elements
+        Tooltip addEntryTooltip = new Tooltip("Click this to add a new entry");
+        Tooltip remEntryTooltip = new Tooltip("Click this to remove an entry");
+        addEntry.setTooltip(addEntryTooltip);
+        removeEntry.setTooltip(remEntryTooltip);
 
 //        //BorderPane Elements
 //        //Top Element
