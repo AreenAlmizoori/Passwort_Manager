@@ -36,6 +36,7 @@ public class MainMenu extends Application {
         Button removeCategory = new Button("-");
         anchorPaneLeft.getChildren().addAll(addCategory, removeCategory, categoryOptions);
         mainMenu.setLeft(anchorPaneLeft);
+        anchorPaneLeft.setPrefWidth(150);
 
         //Button und Label placement and width (for anchorPaneLeft)
         categoryOptions.setLayoutX(0);
@@ -62,11 +63,19 @@ public class MainMenu extends Application {
         mainMenu.setRight(anchorPaneRight);
 
         //Button und Label placement and width (for anchorPaneRight)
-        entryOptions.setLayoutX(680);
+//        entryOptions.setLayoutX(680);
+//        entryOptions.setLayoutY(20);
+//        addEntry.setLayoutX(680);
+//        addEntry.setLayoutY(40);
+//        removeEntry.setLayoutX(720);
+//        removeEntry.setLayoutY(40);
+//        addEntry.setPrefWidth(30);
+//        removeEntry.setPrefWidth(30);
+        entryOptions.setLayoutX(0);
         entryOptions.setLayoutY(20);
-        addEntry.setLayoutX(680);
+        addEntry.setLayoutX(530);
         addEntry.setLayoutY(40);
-        removeEntry.setLayoutX(720);
+        removeEntry.setLayoutX(570);
         removeEntry.setLayoutY(40);
         addEntry.setPrefWidth(30);
         removeEntry.setPrefWidth(30);
