@@ -1,10 +1,12 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 public class MainMenu extends Application {
@@ -16,7 +18,77 @@ public class MainMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         BorderPane mainMenu = new BorderPane();
-        Scene scene = new Scene(mainMenu, 900, 500);
+        Scene scene = new Scene(mainMenu);
+
+
+        //BorderPane Top Element
+        VBox topArea = new VBox();
+        Label programName = new Label("Password Manager");
+        Line horizontalLine = new Line(0, 10, 900, 10);
+        topArea.getChildren().addAll(programName, horizontalLine);
+        topArea.setPrefSize(900, 30);
+        programName.setPadding(new Insets(0,0,10,0));
+        mainMenu.setTop(topArea);
+
+
+        //BorderPane Left Element
+        AnchorPane leftArea = new AnchorPane();
+        Label categoryOptions = new Label("Category Options");
+        Button addCategory = new Button("+");
+        Button removeCategory = new Button("-");
+        Line leftVerticalLine = new Line(200,0,200,470);
+        leftArea.setPrefSize(200,470);
+        leftArea.getChildren().addAll(categoryOptions, addCategory, removeCategory, leftVerticalLine);
+        mainMenu.setLeft(leftArea);
+
+        //Sizes of left elements
+        addCategory.setPrefSize(30, 30);
+        removeCategory.setPrefSize(30, 30);
+        categoryOptions.setPrefSize(120,20);
+
+        //Positions of left elements
+        categoryOptions.setLayoutX(5);
+        categoryOptions.setLayoutY(0);
+        addCategory.setLayoutX(5);
+        addCategory.setLayoutY(20);
+        removeCategory.setLayoutX(45);
+        removeCategory.setLayoutY(20);
+
+
+        //BorderPane Center Element
+        VBox centerArea = new VBox();
+        Button mainCategory = new Button("Main");
+        centerArea.getChildren().addAll(mainCategory);
+        //centerArea.setPadding(new Insets(0, 20, 0,0));
+        mainMenu.setCenter(centerArea);
+
+        //Sizes of center elements
+        centerArea.setPrefSize(400, 470);
+        mainCategory.setPrefSize(400, 30);
+
+
+        //BorderPane Right Element
+        AnchorPane rightArea = new AnchorPane();
+        Label entryOptions = new Label("Entry Options");
+        Button addEntry = new Button("+");
+        Button removeEntry = new Button("-");
+        Line rightVerticalLine = new Line(0, 0, 0, 470);
+        rightArea.setPrefSize(300, 470);
+        rightArea.getChildren().addAll(entryOptions, addEntry, removeEntry, rightVerticalLine);
+        mainMenu.setRight(rightArea);
+
+        //Sizes of right elements
+        addEntry.setPrefSize(30, 30);
+        removeEntry.setPrefSize(30, 30);
+        entryOptions.setPrefSize(120,20);
+
+        //Positions of right elements
+        entryOptions.setLayoutX(5);
+        entryOptions.setLayoutY(0);
+        addEntry.setLayoutX(5);
+        addEntry.setLayoutY(20);
+        removeEntry.setLayoutX(45);
+        removeEntry.setLayoutY(20);
 
 //        //BorderPane Elements
 //        //Top Element
