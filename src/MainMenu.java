@@ -6,6 +6,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
@@ -135,6 +136,19 @@ public class MainMenu extends Application {
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
+            }
+        });
+        viewEntries.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                //New Stage + Scene
+                ScrollPane viewingEntries = new ScrollPane();
+                viewingEntries.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                Stage viewStage = new Stage();
+                viewStage.setScene(new Scene(viewingEntries, 500, 600));
+                viewStage.show();
+
+                //
             }
         });
 
