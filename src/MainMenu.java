@@ -130,17 +130,22 @@ public class MainMenu extends Application {
                 try{
                     String entry = "";
                     Entry newEntry = new Entry();
+
                     String application = PopUpFx.readLine("Enter the name of the website/app.");
                     entry += application + ",";
                     newEntry.setApplication(application);
+
                     String username = PopUpFx.readLine("Enter your username.");
                     entry += username + ",";
                     newEntry.setUsername(username);
+
                     String password = PopUpFx.readLine("Enter your password.");
                     entry += password;
                     newEntry.setPassword(password);
-                    mainCat.addEntry(newEntry);
+
+
                     data.add(entry);
+                    //mainCat.addEntry(newEntry);
                     Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), data, StandardOpenOption.APPEND);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
@@ -164,10 +169,10 @@ public class MainMenu extends Application {
                 List<Entry> contents = mainCat.getContents();
                 while(labelsCreated < categoryEntries){
                     Entry entry = contents.get(labelsCreated);
-                    Label newLabel = new Label("Entry " + (labelsCreated+1));
-                    Label websiteOrApp = new Label(entry.getApplication());
-                    Label username = new Label(entry.getUsername());
-                    Label password = new Label(entry.getPassword());
+                    Label newLabel = new Label("a");
+                    Label websiteOrApp = new Label("a");
+                    Label username = new Label("a");
+                    Label password = new Label("a");
 
                     view.getChildren().addAll(newLabel, websiteOrApp, username, password);
                     labelsCreated++;
