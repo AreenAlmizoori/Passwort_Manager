@@ -87,15 +87,17 @@ public class MainMenu extends Application {
         Label entryOptions = new Label("Entry Options");
         Button addEntry = new Button("+");
         Button removeEntry = new Button("-");
+        Button viewEntries = new Button("View");
         Line rightVerticalLine = new Line(0, 0, 0, 470);
         rightArea.setPrefSize(300, 470);
-        rightArea.getChildren().addAll(entryOptions, addEntry, removeEntry, rightVerticalLine);
+        rightArea.getChildren().addAll(entryOptions, addEntry, removeEntry, viewEntries, rightVerticalLine);
         mainMenu.setRight(rightArea);
 
         //Sizes of right elements
         addEntry.setPrefSize(30, 30);
         removeEntry.setPrefSize(30, 30);
         entryOptions.setPrefSize(120,20);
+        viewEntries.setPrefSize(50,30);
 
         //Positions of right elements
         entryOptions.setLayoutX(5);
@@ -104,12 +106,16 @@ public class MainMenu extends Application {
         addEntry.setLayoutY(20);
         removeEntry.setLayoutX(45);
         removeEntry.setLayoutY(20);
+        viewEntries.setLayoutX(85);
+        viewEntries.setLayoutY(20);
 
         //Tooltips for right elements
         Tooltip addEntryTooltip = new Tooltip("Click this to add a new entry");
         Tooltip remEntryTooltip = new Tooltip("Click this to remove an entry");
+        Tooltip viewEntriesTooltip = new Tooltip("Click this to view your entries");
         addEntry.setTooltip(addEntryTooltip);
         removeEntry.setTooltip(remEntryTooltip);
+        viewEntries.setTooltip(viewEntriesTooltip);
 
         //Event Handlers
         List<String> data = new ArrayList<>(); //List for all entries
