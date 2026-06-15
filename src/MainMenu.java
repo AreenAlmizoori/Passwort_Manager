@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class MainMenu extends Application {
 
@@ -118,6 +119,9 @@ public class MainMenu extends Application {
         removeEntry.setTooltip(remEntryTooltip);
         viewEntries.setTooltip(viewEntriesTooltip);
 
+        //default Main Category
+        Category mainCat = new Category();
+
         //Event Handlers
         List<String> data = new ArrayList<>(); //List for all entries
         addEntry.setOnAction(new EventHandler<ActionEvent>() {
@@ -135,6 +139,7 @@ public class MainMenu extends Application {
                     String password = PopUpFx.readLine("Enter your password.");
                     entry += password;
                     newEntry.setPassword(password);
+                    mainCat.addEntry(newEntry);
                     data.add(entry);
                     Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), data, StandardOpenOption.APPEND);
                 } catch (IOException e) {
@@ -146,12 +151,42 @@ public class MainMenu extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 //New Stage + Scene
-                ScrollPane viewingEntries = new ScrollPane();
-                viewingEntries.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                VBox view = new VBox();
+                ScrollPane viewingEntries = new ScrollPane(view);
+                viewingEntries.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 Stage viewStage = new Stage();
                 viewStage.setScene(new Scene(viewingEntries, 500, 600));
-                viewStage.show();
 
+
+
+                int labelsCreated = 0;
+                int categoryEntries = mainCat.getContents().size();
+                List<Entry> contents = mainCat.getContents();
+                while(labelsCreated < categoryEntries){
+                    Entry entry = contents.get(labelsCreated);
+                    Label newLabel = new Label("Entry " + (labelsCreated+1));
+                    Label websiteOrApp = new Label(entry.getApplication());
+                    Label username = new Label(entry.getUsername());
+                    Label password = new Label(entry.getPassword());
+
+                    view.getChildren().addAll(newLabel, websiteOrApp, username, password);
+                    labelsCreated++;
+                }
+
+//                int labelsCreated = 0;
+//                int categoryEntries = mainCat.getContents().size();
+//                List<Entry> contents = mainCat.getContents();
+//                while(labelsCreated < categoryEntries){
+//                    Entry entry = contents.get(labelsCreated);
+//                    Label newLabel = new Label("Entry " + (labelsCreated+1));
+//                    Label websiteOrApp = new Label(entry.getApplication());
+//                    Label username = new Label(entry.getUsername());
+//                    Label password = new Label(entry.getPassword());
+//
+//                    view.getChildren().addAll(newLabel, websiteOrApp, username, password);
+//                    labelsCreated++;
+//                }
+                viewStage.show();
             }
         });
 
