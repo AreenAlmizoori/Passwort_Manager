@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -8,6 +10,13 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainMenu extends Application {
 
@@ -101,6 +110,27 @@ public class MainMenu extends Application {
         Tooltip remEntryTooltip = new Tooltip("Click this to remove an entry");
         addEntry.setTooltip(addEntryTooltip);
         removeEntry.setTooltip(remEntryTooltip);
+
+        //Event Handlers
+        List<String> data = new ArrayList<>(); //List for all entries
+        addEntry.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try{
+                    String entry = "";
+                    String application = PopUpFx.readLine("Enter the name of the website/app.");
+                    entry += application + ",";
+                    String username = PopUpFx.readLine("Enter your username.");
+                    entry += username + ",";
+                    String password = PopUpFx.readLine("Enter your password.");
+                    entry += password;
+                    data.add(entry);
+                    Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), data, StandardOpenOption.APPEND);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
 
 //        //BorderPane Elements
 //        //Top Element
