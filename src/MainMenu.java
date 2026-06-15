@@ -152,7 +152,6 @@ public class MainMenu extends Application {
                 viewStage.setScene(new Scene(viewingEntries, 500, 600));
                 viewStage.show();
 
-                //
             }
         });
 
