@@ -2,11 +2,13 @@ public class Entry {
     private String application;
     private String username;
     private String password;
+    private static int entryID;
 
     public Entry(){
         this.application = " ";
         this.username = " ";
         this.password = " ";
+        entryID++;
     }
 
     public String getApplication() {
@@ -31,6 +33,14 @@ public class Entry {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static int getEntryID() {
+        return entryID;
+    }
+
+    public static void setEntryID(int entryID) {
+        Entry.entryID = entryID;
     }
 
     @Override
