@@ -131,6 +131,8 @@ public class MainMenu extends Application {
                     String entry = "";
                     Entry newEntry = new Entry();
 
+                    entry += Entry.getEntryID() + ",";
+
                     String application = PopUpFx.readLine("Enter the name of the website/app.");
                     entry += application + ",";
                     newEntry.setApplication(application);
@@ -182,6 +184,14 @@ public class MainMenu extends Application {
             }
         });
 
+        removeEntry.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FlowPane removeEntryView = new FlowPane(Orientation.VERTICAL);
+                Stage removeEntryStage = new Stage();
+                removeEntryStage.setScene(new Scene(removeEntryView, 400, 400));
+            }
+        });
 
 
         stage.setTitle("Password Manager");
