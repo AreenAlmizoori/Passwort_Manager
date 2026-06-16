@@ -6,7 +6,7 @@ public class StartApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        LoginWindow login = new LoginWindow();
+        Login login = new Login();
         login.show();
 
     }
