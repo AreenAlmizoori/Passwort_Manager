@@ -19,4 +19,9 @@ public class Category {
     public List<Entry> getContents() {
         return contents;
     }
+
+    @Override
+    public String toString() {
+        return "List of Entries: " + contents;
+    }
 }
