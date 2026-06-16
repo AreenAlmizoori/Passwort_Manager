@@ -152,6 +152,7 @@ public class MainMenu extends Application {
                 }
             }
         });
+
         viewEntries.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
