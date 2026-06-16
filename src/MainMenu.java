@@ -145,7 +145,7 @@ public class MainMenu extends Application {
 
 
                     data.add(entry);
-                    //mainCat.addEntry(newEntry);
+                    mainCat.addEntry(newEntry);
                     Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), data, StandardOpenOption.APPEND);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());

@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class Category {
-    private List<Entry> contents;
+    private List<Entry> contents = new ArrayList<>();
 
 //    public Category(){
 //        Entry emptyEntry = new Entry(); //empty entry is added whenever a category is created.
