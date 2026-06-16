@@ -168,7 +168,6 @@ public class MainMenu extends Application {
                 int categoryEntries = mainCat.getContents().size(); //amount of entries in the category
                 List<Entry> contents = mainCat.getContents(); //List of entries in the category
                 while(labelsCreated < categoryEntries){
-                    Entry entry = contents.get(labelsCreated);
                     Label newLabel = new Label("Entry " + (labelsCreated+1));
                     Label websiteOrApp = new Label("Website/Application: " + contents.get(labelsCreated).getApplication());
                     Label username = new Label("Username: " + contents.get(labelsCreated).getUsername());
