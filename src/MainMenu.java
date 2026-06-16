@@ -165,16 +165,17 @@ public class MainMenu extends Application {
 
 
                 int labelsCreated = 0;
-                int categoryEntries = mainCat.getContents().size();
-                List<Entry> contents = mainCat.getContents();
+                int categoryEntries = mainCat.getContents().size(); //amount of entries in the category
+                List<Entry> contents = mainCat.getContents(); //List of entries in the category
                 while(labelsCreated < categoryEntries){
                     Entry entry = contents.get(labelsCreated);
-                    Label newLabel = new Label("a");
-                    Label websiteOrApp = new Label("a");
-                    Label username = new Label("a");
-                    Label password = new Label("a");
+                    Label newLabel = new Label("Entry " + (labelsCreated+1));
+                    Label websiteOrApp = new Label("Website/Application: " + contents.get(labelsCreated).getApplication());
+                    Label username = new Label("Username: " + contents.get(labelsCreated).getUsername());
+                    Label password = new Label("Password: " + contents.get(labelsCreated).getPassword());
+                    Label space = new Label(" ");
 
-                    view.getChildren().addAll(newLabel, websiteOrApp, username, password);
+                    view.getChildren().addAll(newLabel, websiteOrApp, username, password, space);
                     labelsCreated++;
                 }
 
