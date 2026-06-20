@@ -170,12 +170,20 @@ public class MainMenu extends Application {
                 int labelsCreated = 0;
                 int categoryEntries = mainCat.getContents().size(); //amount of entries in the category
                 List<Entry> contents = mainCat.getContents(); //List of entries in the category
+                if(categoryEntries == 0){
+                    Label noEntries = new Label("You currently have no entries.");
+                    view.getChildren().add(noEntries);
+                    viewStage.setMaxHeight(100);
+                    viewStage.setMaxWidth(200);
+                }
                 while(labelsCreated < categoryEntries){
                     Label newLabel = new Label("Entry " + (labelsCreated+1));
                     Label websiteOrApp = new Label("Website/Application: " + contents.get(labelsCreated).getApplication());
                     Label username = new Label("Username: " + contents.get(labelsCreated).getUsername());
                     Label password = new Label("Password: " + contents.get(labelsCreated).getPassword());
                     Label space = new Label(" ");
+                    viewStage.setMaxHeight(600);
+                    viewStage.setMaxWidth(500);
 
                     view.getChildren().addAll(newLabel, websiteOrApp, username, password, space);
                     labelsCreated++;
@@ -190,6 +198,8 @@ public class MainMenu extends Application {
                 FlowPane removeEntryView = new FlowPane(Orientation.VERTICAL);
                 Stage removeEntryStage = new Stage();
                 removeEntryStage.setScene(new Scene(removeEntryView, 400, 400));
+
+                removeEntryStage.show();
             }
         });
 
