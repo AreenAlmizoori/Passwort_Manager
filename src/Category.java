@@ -37,8 +37,8 @@ public class Category {
     }
 
     /**
-     * prints a Category object in the console
-     * @return a String of the attribute(s)
+     * String representation of a Category object
+     * @return a String of the attribute
      */
     @Override
     public String toString() {
