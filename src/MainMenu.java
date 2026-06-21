@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -213,13 +214,75 @@ public class MainMenu extends Application {
                     Label newLabel = new Label("Entry " + (contents.get(labelsCreated).getId()));
                     Label websiteOrApp = new Label("Website/Application: " + contents.get(labelsCreated).getApplication());
                     Label username = new Label("Username: " + contents.get(labelsCreated).getUsername());
-                    Label password = new Label("Password: " + contents.get(labelsCreated).getPassword());
+                    Label password = new Label("Password: ");
+                    Hyperlink clickablePassword = new Hyperlink("*******************");
                     Label space = new Label(" "); //space to separate the entries from one another
+
+                    int finalLabelsCreated = labelsCreated;
+                    //User must enter Master Data to be able to view hidden password
+                    clickablePassword.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+
+                                VBox viewPassword = new VBox();
+
+                                TextField masterUser = new TextField();
+                                masterUser.setPromptText("Enter your Username");
+                                PasswordField masterPass = new PasswordField();
+                                masterPass.setPromptText("Enter your Master Password");
+                                Button submit = new Button("submit");
+
+
+                                //submits entered data and compares to master data
+                                submit.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent actionEvent) {
+                                        try {
+                                            String masterUserText = masterUser.getText();
+                                            String masterPassText = masterPass.getText();
+
+                                            String hashedEnteredPass = masterPassText.hashCode()+"";
+
+                                            List<String> lines = Files.readAllLines(Paths.get("src/textFiles/MasterData.txt"));
+                                            String line = lines.get(0);
+                                            String[] masterData = line.split(";");
+
+                                            //compares the master data
+                                            if((masterData[0].equals(masterUserText)) && (masterPassText.hashCode() == Integer.parseInt(masterData[1]))){
+                                                Label unhashedPass = new Label("Password: " + contents.get(finalLabelsCreated).getPassword());
+                                                viewPassword.getChildren().addAll(unhashedPass);
+                                            }else{
+                                                //another window is shown, if the data enter is incorrect
+                                                FlowPane incorrectData = new FlowPane();
+                                                Label incorrect = new Label("Incorrect Data!");
+
+                                                incorrectData.getChildren().addAll(incorrect);
+
+                                                Stage incorrectDataStage = new Stage();
+                                                incorrectDataStage.setScene(new Scene(incorrectData, 200, 50));
+                                                incorrectDataStage.show();
+                                            }
+                                        } catch (IOException e) {
+                                            System.out.println("Error from reading data. " + e.getMessage());
+                                        }
+                                    }
+                                });
+
+                                viewPassword.getChildren().addAll(masterUser, masterPass, submit);
+
+                                Stage viewPassStage = new Stage();
+                                viewPassStage.setScene(new Scene(viewPassword, 400, 500));
+                                viewPassStage.setTitle("View Password");
+                                viewPassStage.show();
+
+                        }
+                    });
+
 
                     viewStage.setMaxHeight(600);
                     viewStage.setMaxWidth(500);
 
-                    view.getChildren().addAll(newLabel, websiteOrApp, username, password, space);
+                    view.getChildren().addAll(newLabel, websiteOrApp, username, password, clickablePassword, space);
                     labelsCreated++;
                 }
 
