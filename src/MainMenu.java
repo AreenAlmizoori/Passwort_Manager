@@ -162,6 +162,7 @@ public class MainMenu extends Application {
                 viewingEntries.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 Stage viewStage = new Stage();
                 viewStage.setScene(new Scene(viewingEntries, 500, 600));
+                viewStage.setTitle("View Entries");
 
 
 
@@ -196,6 +197,7 @@ public class MainMenu extends Application {
                 FlowPane removeEntryView = new FlowPane(Orientation.VERTICAL);
                 Stage removeEntryStage = new Stage();
                 removeEntryStage.setScene(new Scene(removeEntryView, 600, 200));
+                removeEntryStage.setTitle("Remove Entries");
 
                 Label instructions = new Label("Please enter the number of the password entry you want to delete (i.e. 1)");
                 Label instructions2 = new Label("If you are unsure about which entries you already have saved, you can click on the view button in the main menu.");
