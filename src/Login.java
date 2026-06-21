@@ -18,10 +18,10 @@ public class Login{
         Label lblTitle = new Label("Password Manager Login");
 
         TextField txtUsername = new TextField();
-        txtUsername.setPromptText("Benutzername");
+        txtUsername.setPromptText("Username");
 
         PasswordField txtPassword = new PasswordField();
-        txtPassword.setPromptText("Master Passwort");
+        txtPassword.setPromptText("Master Password");
 
         Button btnLogin = new Button("Login");
 
@@ -46,7 +46,7 @@ public class Login{
                 }
 
             } else {
-                PopUpFx.print("Login fehlgeschlagen!");
+                PopUpFx.print("Login failed!");
             }
 
         });
