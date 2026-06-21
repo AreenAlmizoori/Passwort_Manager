@@ -10,8 +10,12 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
@@ -89,8 +93,6 @@ public class MainMenu extends Application {
         mainCategory.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //BorderPane Right Element
-
                 //default Main Category
                 Category mainCat = new Category();
                 borderpaneRightElement(mainMenu, 0, mainCat);
@@ -98,205 +100,12 @@ public class MainMenu extends Application {
         });
 
 
-//        //BorderPane Right Element
-//        AnchorPane rightArea = new AnchorPane();
-//        Label entryOptions = new Label("Entry Options");
-//        Button addEntry = new Button("+");
-//        Button removeEntry = new Button("-");
-//        Button viewEntries = new Button("View");
-//        Line rightVerticalLine = new Line(0, 0, 0, 470);
-//        rightArea.setPrefSize(300, 470);
-//        rightArea.getChildren().addAll(entryOptions, addEntry, removeEntry, viewEntries, rightVerticalLine);
-//        mainMenu.setRight(rightArea);
-//
-//        //Sizes of right elements
-//        addEntry.setPrefSize(30, 30);
-//        removeEntry.setPrefSize(30, 30);
-//        entryOptions.setPrefSize(120,20);
-//        viewEntries.setPrefSize(50,30);
-//
-//        //Positions of right elements
-//        entryOptions.setLayoutX(5);
-//        entryOptions.setLayoutY(0);
-//        addEntry.setLayoutX(5);
-//        addEntry.setLayoutY(20);
-//        removeEntry.setLayoutX(45);
-//        removeEntry.setLayoutY(20);
-//        viewEntries.setLayoutX(85);
-//        viewEntries.setLayoutY(20);
-//
-//        //Tooltips for right elements
-//        Tooltip addEntryTooltip = new Tooltip("Click this to add a new entry");
-//        Tooltip remEntryTooltip = new Tooltip("Click this to remove an entry");
-//        Tooltip viewEntriesTooltip = new Tooltip("Click this to view your entries");
-//        addEntry.setTooltip(addEntryTooltip);
-//        removeEntry.setTooltip(remEntryTooltip);
-//        viewEntries.setTooltip(viewEntriesTooltip);
-//
-//        //default Main Category
-//        Category mainCat = new Category();
-//
-//        //Event Handlers
-//        List<String> data = new ArrayList<>(); //List for all entries
-//        addEntry.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//                try{
-//                    String entry = "";
-//                    Entry newEntry = new Entry();
-//
-//                    entry += Entry.getEntryID() + ",";
-//
-//                    String application = PopUpFx.readLine("Enter the name of the website/app.");
-//                    entry += application + ",";
-//                    newEntry.setApplication(application);
-//
-//                    String username = PopUpFx.readLine("Enter your username.");
-//                    entry += username + ",";
-//                    newEntry.setUsername(username);
-//
-//                    String password = PopUpFx.readLine("Enter your password.");
-//                    entry += password;
-//                    newEntry.setPassword(password);
-//
-//
-//                    data.add(entry);
-//                    mainCat.addEntry(newEntry);
-//                    Files.write(Paths.get("src/textFiles/PasswordEntries0.txt"), data);
-//                } catch (IOException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//            }
-//        });
-//
-//        viewEntries.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//                //New Stage + Scene
-//                VBox view = new VBox();
-//                ScrollPane viewingEntries = new ScrollPane(view);
-//                viewingEntries.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-//                Stage viewStage = new Stage();
-//                viewStage.setScene(new Scene(viewingEntries, 500, 600));
-//                viewStage.setTitle("View Entries");
-//
-//
-//
-//                int labelsCreated = 0;
-//                int categoryEntries = mainCat.getContents().size(); //amount of entries in the category
-//                List<Entry> contents = mainCat.getContents(); //List of entries in the category
-//                if(categoryEntries == 0){
-//                    Label noEntries = new Label("You currently have no entries.");
-//                    view.getChildren().add(noEntries);
-//                    viewStage.setMaxHeight(100);
-//                    viewStage.setMaxWidth(200);
-//                }
-//                while(labelsCreated < categoryEntries){
-//                    Label newLabel = new Label("Entry " + (contents.get(labelsCreated).getId()));
-//                    Label websiteOrApp = new Label("Website/Application: " + contents.get(labelsCreated).getApplication());
-//                    Label username = new Label("Username: " + contents.get(labelsCreated).getUsername());
-//                    Label password = new Label("Password: " + contents.get(labelsCreated).getPassword());
-//                    Label space = new Label(" ");
-//                    viewStage.setMaxHeight(600);
-//                    viewStage.setMaxWidth(500);
-//
-//                    view.getChildren().addAll(newLabel, websiteOrApp, username, password, space);
-//                    labelsCreated++;
-//                }
-//                viewStage.show();
-//            }
-//        });
-//
-//        removeEntry.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//                FlowPane removeEntryView = new FlowPane(Orientation.VERTICAL);
-//                Stage removeEntryStage = new Stage();
-//                removeEntryStage.setScene(new Scene(removeEntryView, 600, 200));
-//                removeEntryStage.setTitle("Remove Entries");
-//
-//                Label instructions = new Label("Please enter the number of the password entry you want to delete (i.e. 1)");
-//                Label instructions2 = new Label("If you are unsure about which entries you already have saved, you can click on the view button in the main menu.");
-//                TextField deleteEntry = new TextField();
-//                Button delete = new Button("Delete");
-//
-//
-//                delete.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent actionEvent) {
-//                        String deleteEntryText = deleteEntry.getText();
-//                        try{
-//                            int entryID = Integer.parseInt(deleteEntryText.trim());
-//                            boolean foundEntry = false;
-//                            int index = 0;
-//                            List<String> lines = Files.readAllLines(Paths.get("src/textFiles/PasswordEntries0.txt"));
-//                            while(index < lines.size()){
-//                                String line = lines.get(index);
-//                                int foundEntryID = Integer.parseInt(line.charAt(0)+"");
-//                                if(foundEntryID == entryID){
-//                                    foundEntry = true;
-//                                    break;
-//                                }
-//                                index++;
-//                            }
-//                            int deleteLinePosition = 0;
-//
-//                            if(foundEntry){
-//                                List<String> newFile = new ArrayList<>();
-//                                while(deleteLinePosition < lines.size()){
-//                                    String line = lines.get(deleteLinePosition);
-//                                    String[] entryAttributes = line.split(",");
-//                                    Entry currentEntry = new Entry(entryAttributes[1], entryAttributes[2], entryAttributes[3], Integer.parseInt(entryAttributes[0]));
-//                                    int currentLineID = Integer.parseInt(line.charAt(0)+"");
-//                                    if(currentLineID != entryID){
-//                                        newFile.add(line);
-//                                    }else{
-//                                        mainCat.removeEntry(currentEntry);
-//                                    }
-//                                    deleteLinePosition++;
-//                                }
-//                                Files.write(Paths.get("src/textFiles/PasswordEntries0.txt"), newFile);
-//                            }else{
-//                                FlowPane error = new FlowPane();
-//                                Stage errorStage = new Stage();
-//                                errorStage.setScene(new Scene(error, 200, 50));
-//
-//                                Label entryNotFound = new Label("No entry with this ID was found.");
-//                                error.getChildren().addAll(entryNotFound);
-//
-//                                errorStage.show();
-//                            }
-//
-//                        } catch (NumberFormatException e) {
-//                            FlowPane exception = new FlowPane();
-//                            Stage exceptionStage = new Stage();
-//                            exceptionStage.setScene(new Scene(exception, 300, 50));
-//                            exceptionStage.setTitle("Error");
-//
-//                            Label errorText = new Label("Invalid input. Please make sure to type a number.");
-//                            exception.getChildren().addAll(errorText);
-//
-//                            exceptionStage.show();
-//                        }catch (IOException e){
-//                            System.out.println("Error from reading/writing text. " + e.getMessage());
-//                        }
-//                    }
-//                });
-//
-//                removeEntryView.getChildren().addAll(instructions, instructions2, deleteEntry, delete);
-//
-//
-//                removeEntryStage.show();
-//            }
-//        });
-
-
         stage.setTitle("Main Menu");
         stage.setScene(scene);
         stage.show();
     }
 
-    public void borderpaneRightElement(BorderPane mainMenu, int categoryNumber, Category category){
+    public void borderpaneRightElement(BorderPane mainMenu, int categoryNumber, Category category) {
         //BorderPane Right Element
         AnchorPane rightArea = new AnchorPane();
         Label entryOptions = new Label("Entry Options");
@@ -304,6 +113,7 @@ public class MainMenu extends Application {
         Button removeEntry = new Button("-");
         Button viewEntries = new Button("View");
         Line rightVerticalLine = new Line(0, 0, 0, 470);
+
         rightArea.setPrefSize(300, 470);
         rightArea.getChildren().addAll(entryOptions, addEntry, removeEntry, viewEntries, rightVerticalLine);
         mainMenu.setRight(rightArea);
@@ -311,8 +121,8 @@ public class MainMenu extends Application {
         //Sizes of right elements
         addEntry.setPrefSize(30, 30);
         removeEntry.setPrefSize(30, 30);
-        entryOptions.setPrefSize(120,20);
-        viewEntries.setPrefSize(50,30);
+        entryOptions.setPrefSize(120, 20);
+        viewEntries.setPrefSize(50, 30);
 
         //Positions of right elements
         entryOptions.setLayoutX(5);
@@ -333,26 +143,31 @@ public class MainMenu extends Application {
         viewEntries.setTooltip(viewEntriesTooltip);
 
 
-
         //Event Handlers
+        Path filePath = Paths.get("src/textFiles/PasswordEntries0.txt"); //Path for Data
         List<String> data = new ArrayList<>(); //List for all entries
+
+        //adding entries
         addEntry.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try{
-                    String entry = "";
-                    Entry newEntry = new Entry();
+                    String entry = ""; //string of an entry to be added to the data list
+                    Entry newEntry = new Entry(); //Entry object for the entry
 
-                    entry += Entry.getEntryID() + ",";
+                    entry += Entry.getEntryID() + ","; //adding the entry id to the string
 
+                    //adding the application/website given by the user to the entry-string and Entry object
                     String application = PopUpFx.readLine("Enter the name of the website/app.");
                     entry += application + ",";
                     newEntry.setApplication(application);
 
+                    //adding the username given by the user to the entry-string and Entry object
                     String username = PopUpFx.readLine("Enter your username.");
                     entry += username + ",";
                     newEntry.setUsername(username);
 
+                    //adding the password given by the user to the entry-string and Entry object
                     String password = PopUpFx.readLine("Enter your password.");
                     entry += password;
                     newEntry.setPassword(password);
@@ -360,9 +175,9 @@ public class MainMenu extends Application {
 
                     data.add(entry);
                     category.addEntry(newEntry);
-                    Files.write(Paths.get("src/textFiles/PasswordEntries"+categoryNumber+".txt"), data);
+                    Files.write(filePath, data); //writing data into the text file for all entries
                 } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Error by writing into file. " + e.getMessage());
                 }
             }
         });
@@ -370,44 +185,53 @@ public class MainMenu extends Application {
         viewEntries.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //New Stage + Scene
+                //New Stage + Scene for View Window
                 VBox view = new VBox();
                 ScrollPane viewingEntries = new ScrollPane(view);
                 viewingEntries.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
                 Stage viewStage = new Stage();
                 viewStage.setScene(new Scene(viewingEntries, 500, 600));
                 viewStage.setTitle("View Entries");
 
 
 
-                int labelsCreated = 0;
+                int labelsCreated = 0; //amount of Label objects for entries created
                 int categoryEntries = category.getContents().size(); //amount of entries in the category
                 List<Entry> contents = category.getContents(); //List of entries in the category
+
+                //in cases where the category has no entries, a separate window will be shown informing the user
                 if(categoryEntries == 0){
                     Label noEntries = new Label("You currently have no entries.");
                     view.getChildren().add(noEntries);
                     viewStage.setMaxHeight(100);
                     viewStage.setMaxWidth(200);
                 }
+
+                //if the category has entries, then the entries will be displayed to the user
                 while(labelsCreated < categoryEntries){
                     Label newLabel = new Label("Entry " + (contents.get(labelsCreated).getId()));
                     Label websiteOrApp = new Label("Website/Application: " + contents.get(labelsCreated).getApplication());
                     Label username = new Label("Username: " + contents.get(labelsCreated).getUsername());
                     Label password = new Label("Password: " + contents.get(labelsCreated).getPassword());
-                    Label space = new Label(" ");
+                    Label space = new Label(" "); //space to separate the entries from one another
+
                     viewStage.setMaxHeight(600);
                     viewStage.setMaxWidth(500);
 
                     view.getChildren().addAll(newLabel, websiteOrApp, username, password, space);
                     labelsCreated++;
                 }
+
                 viewStage.show();
             }
         });
 
+        //removing entries
         removeEntry.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                //creates new window for removing entries
                 FlowPane removeEntryView = new FlowPane(Orientation.VERTICAL);
                 Stage removeEntryStage = new Stage();
                 removeEntryStage.setScene(new Scene(removeEntryView, 600, 200));
@@ -416,45 +240,63 @@ public class MainMenu extends Application {
                 Label instructions = new Label("Please enter the number of the password entry you want to delete (i.e. 1)");
                 Label instructions2 = new Label("If you are unsure about which entries you already have saved, you can click on the view button in the main menu.");
                 TextField deleteEntry = new TextField();
-                Button delete = new Button("Delete");
+                Button delete = new Button("Delete"); //Button to delete the given entry
 
 
+                //Action for delete Button
                 delete.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        String deleteEntryText = deleteEntry.getText();
+                        String deleteEntryText = deleteEntry.getText(); //input from user that says which entry to delete
+
                         try{
-                            int entryID = Integer.parseInt(deleteEntryText.trim());
-                            boolean foundEntry = false;
-                            int index = 0;
-                            List<String> lines = Files.readAllLines(Paths.get("src/textFiles/PasswordEntries"+categoryNumber+".txt"));
+                            int entryID = Integer.parseInt(deleteEntryText.trim()); //input from user as an Integer
+                            boolean foundEntry = false; //true, if the entry given by the user is found
+                            List<String> lines = Files.readAllLines(filePath);
+                            int index = 0; //gives the position of the current string in the list
+
+                            //goes through the whole list, unless the given entry by the user is found
                             while(index < lines.size()){
-                                String line = lines.get(index);
-                                int foundEntryID = Integer.parseInt(line.charAt(0)+"");
+                                String line = lines.get(index); //current String un list
+                                int foundEntryID = Integer.parseInt(line.charAt(0)+""); //first char of line is always the entryID
+
+                                //ends loop if entry given by user is found
                                 if(foundEntryID == entryID){
                                     foundEntry = true;
                                     break;
                                 }
                                 index++;
                             }
-                            int deleteLinePosition = 0;
 
+                            int deleteLinePosition = 0; //position of entry that needs to be removed
+
+
+                            //if an entry is found, it is removed from both the Category object and the text file
                             if(foundEntry){
-                                List<String> newFile = new ArrayList<>();
+                                List<String> newFile = new ArrayList<>(); //new file to rewrite old file disincluding the entry that needs to be deleted
+
                                 while(deleteLinePosition < lines.size()){
-                                    String line = lines.get(deleteLinePosition);
-                                    String[] entryAttributes = line.split(",");
+                                    String line = lines.get(deleteLinePosition); //current entry in text file
+                                    String[] entryAttributes = line.split(","); //splits entry from text file to the respective attributes for an Entry object
+
+                                    //Entry object representing the current entry
                                     Entry currentEntry = new Entry(entryAttributes[1], entryAttributes[2], entryAttributes[3], Integer.parseInt(entryAttributes[0]));
-                                    int currentLineID = Integer.parseInt(line.charAt(0)+"");
+                                    int currentLineID = Integer.parseInt(line.charAt(0)+""); //ID of current entry in text file
+
+
                                     if(currentLineID != entryID){
+                                        //if the current entry isn't the one that should be deleted, then it should be written into the new text file
                                         newFile.add(line);
                                     }else{
+                                        //if the current entry is the one that should be deleted, then it is removed from the category and not written into the new file
                                         category.removeEntry(currentEntry);
                                     }
                                     deleteLinePosition++;
                                 }
-                                Files.write(Paths.get("src/textFiles/PasswordEntries"+categoryNumber+".txt"), newFile);
+
+                                Files.write(filePath, newFile); //new file overwriting the old file, disincluding the entry that the user wants to delete
                             }else{
+                                //if the given entry by the user doesn't exist, then an error window will inform the user
                                 FlowPane error = new FlowPane();
                                 Stage errorStage = new Stage();
                                 errorStage.setScene(new Scene(error, 200, 50));
@@ -466,6 +308,7 @@ public class MainMenu extends Application {
                             }
 
                         } catch (NumberFormatException e) {
+                            //if the user doesn't enter a number, then an error window will be shown, informing the user to enter a number
                             FlowPane exception = new FlowPane();
                             Stage exceptionStage = new Stage();
                             exceptionStage.setScene(new Scene(exception, 300, 50));
@@ -476,14 +319,13 @@ public class MainMenu extends Application {
 
                             exceptionStage.show();
                         }catch (IOException e){
+                            //if an IOException occurs, then the following text will be printed into the console
                             System.out.println("Error from reading/writing text. " + e.getMessage());
                         }
                     }
                 });
 
                 removeEntryView.getChildren().addAll(instructions, instructions2, deleteEntry, delete);
-
-
                 removeEntryStage.show();
             }
         });
