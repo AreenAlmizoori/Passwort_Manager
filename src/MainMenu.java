@@ -82,6 +82,9 @@ public class MainMenu extends Application {
         VBox centerArea = new VBox();
         Button mainCategory = new Button("Main");
 
+        List<Button> categoryButtons = new ArrayList<>();
+        categoryButtons.add(mainCategory);
+
         centerArea.getChildren().addAll(mainCategory);
         mainMenu.setCenter(centerArea);
 
@@ -100,6 +103,53 @@ public class MainMenu extends Application {
             }
         });
 
+        addCategory.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                String categoryName =
+                        PopUpFx.readLine("Enter category name:");
+
+                if(categoryName == null || categoryName.isBlank()){
+                    return;
+                }
+
+                Button newCategory = new Button(categoryName);
+                newCategory.setPrefSize(400,30);
+
+                categoryButtons.add(newCategory);
+                centerArea.getChildren().add(newCategory);
+
+                Category newCat = new Category();
+
+                newCategory.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        borderpaneRightElement(mainMenu,
+                                categoryButtons.indexOf(newCategory),
+                                newCat);
+                    }
+                });
+            }
+        });
+
+        removeCategory.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                if(categoryButtons.size() <= 1){
+                    PopUpFx.print("The Main category cannot be deleted.");
+                    return;
+                }
+
+                Button lastButton =
+                        categoryButtons.remove(categoryButtons.size() - 1);
+
+                centerArea.getChildren().remove(lastButton);
+
+                PopUpFx.print("Category deleted.");
+            }
+        });
 
         stage.setTitle("Main Menu");
         stage.setScene(scene);
@@ -169,7 +219,34 @@ public class MainMenu extends Application {
                     newEntry.setUsername(username);
 
                     //adding the password given by the user to the entry-string and Entry object
+                    /*
                     String password = PopUpFx.readLine("Enter your password.");
+                    entry += password;
+                    newEntry.setPassword(password);
+                     */
+
+                    String password = PopUpFx.readLine("Enter your password.");
+
+                    boolean duplicatePassword = false;
+
+                    for(Entry existingEntry : category.getContents()){
+
+                        String oldHash =
+                                PasswordHasher.hash(existingEntry.getPassword());
+
+                        String newHash =
+                                PasswordHasher.hash(password);
+
+                        if(oldHash.equals(newHash)){
+                            duplicatePassword = true;
+                            break;
+                        }
+                    }
+
+                    if(duplicatePassword){
+                        PopUpFx.print("Security Warning! This password is already in use.");
+                    }
+
                     entry += password;
                     newEntry.setPassword(password);
 
