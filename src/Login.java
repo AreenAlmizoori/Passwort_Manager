@@ -51,11 +51,13 @@ public class Login {
                 // Registrieren falls Datei leer ist
                 if(Files.size(path) == 0){
 
-                    String hashedPassword =
-                            PasswordHasher.hash(password);
+//                    String hashedPassword =
+//                            PasswordHasher.hash(password);
+                    String hashedPassword = password.hashCode()+"";
 
-                    String data =
-                            username + ";" + hashedPassword;
+                    //String data = username + ";" + password.hashCode();
+                    String data = username + ";" + hashedPassword;
+
 
                     Files.writeString(path, data);
 
@@ -78,8 +80,7 @@ public class Login {
                     String savedUsername = parts[0];
                     String savedHash = parts[1];
 
-                    String enteredHash =
-                            PasswordHasher.hash(password);
+                    String enteredHash = password.hashCode()+"";
 
                     if(username.equals(savedUsername)
                             && enteredHash.equals(savedHash)) {
