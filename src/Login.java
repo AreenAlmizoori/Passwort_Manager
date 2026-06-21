@@ -6,8 +6,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-public class Login{
+public class Login {
 
     private Stage stage;
 
@@ -26,27 +30,84 @@ public class Login{
         Button btnLogin = new Button("Login");
 
         btnLogin.setOnAction(e -> {
-        
 
             String username = txtUsername.getText();
             String password = txtPassword.getText();
 
-            // Vorläufige Testdaten
-            if(username.equals("admin") &&
-               password.equals("1234")) {
+            if(username.isBlank() || password.isBlank()){
+                PopUpFx.print("Please enter username and password.");
+                return;
+            }
 
-                stage.close();
+            try {
 
-                try {
+                Path path = Paths.get("src/textFiles/MasterData.txt");
+
+                // Falls Datei nicht existiert, wird sie erstellt
+                if(!Files.exists(path)){
+                    Files.createFile(path);
+                }
+
+                // Registrieren falls Datei leer ist
+                if(Files.size(path) == 0){
+
+                    String hashedPassword =
+                            PasswordHasher.hash(password);
+
+                    String data =
+                            username + ";" + hashedPassword;
+
+                    Files.writeString(path, data);
+
+                    PopUpFx.print("User successfully created!");
+
+                    stage.close();
+
                     MainMenu menu = new MainMenu();
                     menu.start(new Stage());
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
+
+                } else {
+
+                    // Login überprüfen
+                    String fileContent =
+                            Files.readString(path);
+
+                    String[] parts =
+                            fileContent.split(";");
+
+                    String savedUsername = parts[0];
+                    String savedHash = parts[1];
+
+                    String enteredHash =
+                            PasswordHasher.hash(password);
+
+                    if(username.equals(savedUsername)
+                            && enteredHash.equals(savedHash)) {
+
+                        PopUpFx.print("Login successful!");
+
+                        stage.close();
+
+                        MainMenu menu = new MainMenu();
+                        menu.start(new Stage());
+
+                    } else {
+
+                        PopUpFx.print("Login failed!");
+
+                    }
                 }
 
-            } else {
-                PopUpFx.print("Login failed!");
+            } catch (IOException ex) {
+
+                ex.printStackTrace();
+                PopUpFx.print("Error while accessing file.");
+
+            } catch (Exception ex){
+
+                ex.printStackTrace();
+                PopUpFx.print("Unexpected error occurred.");
+
             }
 
         });
