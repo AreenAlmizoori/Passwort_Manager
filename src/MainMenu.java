@@ -85,12 +85,15 @@ public class MainMenu extends Application {
         mainCategory.setPrefSize(400, 30);
 
 
-        //Event Handler for Category
+        //Event Handler for Main Category
         mainCategory.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 //BorderPane Right Element
-                borderpaneRightElement(mainMenu);
+
+                //default Main Category
+                Category mainCat = new Category();
+                borderpaneRightElement(mainMenu, 0, mainCat);
             }
         });
 
@@ -159,7 +162,7 @@ public class MainMenu extends Application {
 //
 //                    data.add(entry);
 //                    mainCat.addEntry(newEntry);
-//                    Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), data);
+//                    Files.write(Paths.get("src/textFiles/PasswordEntries0.txt"), data);
 //                } catch (IOException e) {
 //                    System.out.println(e.getMessage());
 //                }
@@ -226,7 +229,7 @@ public class MainMenu extends Application {
 //                            int entryID = Integer.parseInt(deleteEntryText.trim());
 //                            boolean foundEntry = false;
 //                            int index = 0;
-//                            List<String> lines = Files.readAllLines(Paths.get("src/textFiles/PasswordEntries.txt"));
+//                            List<String> lines = Files.readAllLines(Paths.get("src/textFiles/PasswordEntries0.txt"));
 //                            while(index < lines.size()){
 //                                String line = lines.get(index);
 //                                int foundEntryID = Integer.parseInt(line.charAt(0)+"");
@@ -252,7 +255,7 @@ public class MainMenu extends Application {
 //                                    }
 //                                    deleteLinePosition++;
 //                                }
-//                                Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), newFile);
+//                                Files.write(Paths.get("src/textFiles/PasswordEntries0.txt"), newFile);
 //                            }else{
 //                                FlowPane error = new FlowPane();
 //                                Stage errorStage = new Stage();
@@ -293,7 +296,7 @@ public class MainMenu extends Application {
         stage.show();
     }
 
-    public void borderpaneRightElement(BorderPane mainMenu){
+    public void borderpaneRightElement(BorderPane mainMenu, int categoryNumber, Category category){
         //BorderPane Right Element
         AnchorPane rightArea = new AnchorPane();
         Label entryOptions = new Label("Entry Options");
@@ -329,8 +332,7 @@ public class MainMenu extends Application {
         removeEntry.setTooltip(remEntryTooltip);
         viewEntries.setTooltip(viewEntriesTooltip);
 
-        //default Main Category
-        Category mainCat = new Category();
+
 
         //Event Handlers
         List<String> data = new ArrayList<>(); //List for all entries
@@ -357,8 +359,8 @@ public class MainMenu extends Application {
 
 
                     data.add(entry);
-                    mainCat.addEntry(newEntry);
-                    Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), data);
+                    category.addEntry(newEntry);
+                    Files.write(Paths.get("src/textFiles/PasswordEntries"+categoryNumber+".txt"), data);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
@@ -379,8 +381,8 @@ public class MainMenu extends Application {
 
 
                 int labelsCreated = 0;
-                int categoryEntries = mainCat.getContents().size(); //amount of entries in the category
-                List<Entry> contents = mainCat.getContents(); //List of entries in the category
+                int categoryEntries = category.getContents().size(); //amount of entries in the category
+                List<Entry> contents = category.getContents(); //List of entries in the category
                 if(categoryEntries == 0){
                     Label noEntries = new Label("You currently have no entries.");
                     view.getChildren().add(noEntries);
@@ -425,7 +427,7 @@ public class MainMenu extends Application {
                             int entryID = Integer.parseInt(deleteEntryText.trim());
                             boolean foundEntry = false;
                             int index = 0;
-                            List<String> lines = Files.readAllLines(Paths.get("src/textFiles/PasswordEntries.txt"));
+                            List<String> lines = Files.readAllLines(Paths.get("src/textFiles/PasswordEntries"+categoryNumber+".txt"));
                             while(index < lines.size()){
                                 String line = lines.get(index);
                                 int foundEntryID = Integer.parseInt(line.charAt(0)+"");
@@ -447,11 +449,11 @@ public class MainMenu extends Application {
                                     if(currentLineID != entryID){
                                         newFile.add(line);
                                     }else{
-                                        mainCat.removeEntry(currentEntry);
+                                        category.removeEntry(currentEntry);
                                     }
                                     deleteLinePosition++;
                                 }
-                                Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), newFile);
+                                Files.write(Paths.get("src/textFiles/PasswordEntries"+categoryNumber+".txt"), newFile);
                             }else{
                                 FlowPane error = new FlowPane();
                                 Stage errorStage = new Stage();
