@@ -13,12 +13,20 @@ public class Category {
 //        contents.add(emptyEntry);
 //    }
 
-    void addEntry(Entry entry){
+    public void addEntry(Entry entry){
         contents.add(entry);
     }
 
     public List<Entry> getContents() {
         return contents;
+    }
+
+    public void removeEntry(Entry entry){
+        if(contents.contains(entry)){
+            contents.remove(entry);
+        }else{
+            System.out.println("This category has no such entry.");
+        }
     }
 
     @Override
