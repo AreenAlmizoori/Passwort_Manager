@@ -4,12 +4,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -148,7 +146,7 @@ public class MainMenu extends Application {
 
                     data.add(entry);
                     mainCat.addEntry(newEntry);
-                    Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), data, StandardOpenOption.APPEND);
+                    Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), data);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
@@ -197,7 +195,64 @@ public class MainMenu extends Application {
             public void handle(ActionEvent actionEvent) {
                 FlowPane removeEntryView = new FlowPane(Orientation.VERTICAL);
                 Stage removeEntryStage = new Stage();
-                removeEntryStage.setScene(new Scene(removeEntryView, 400, 400));
+                removeEntryStage.setScene(new Scene(removeEntryView, 600, 200));
+
+                Label instructions = new Label("Please enter the number of the password entry you want to delete (i.e. 1)");
+                Label instructions2 = new Label("If you are unsure about which entries you already have saved, you can click on the view button in the main menu.");
+                TextField deleteEntry = new TextField();
+                Button delete = new Button("Delete");
+
+
+                delete.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        String deleteEntryText = deleteEntry.getText();
+                        try{
+                            int entryID = Integer.parseInt(deleteEntryText.trim());
+                            boolean foundEntry = false;
+                            int index = 0;
+                            List<String> lines = Files.readAllLines(Paths.get("src/textFiles/PasswordEntries.txt"));
+                            while(index < lines.size()){
+                                String line = lines.get(index);
+                                int foundEntryID = Integer.parseInt(line.charAt(0)+"");
+                                if(foundEntryID == entryID){
+                                    foundEntry = true;
+                                    break;
+                                }
+                                index++;
+                            }
+                            int deleteLine = 0;
+
+                            if(foundEntry){
+                                List<String> newFile = new ArrayList<>();
+                                while(deleteLine < lines.size()){
+                                    String line = lines.get(deleteLine);
+                                    int currentLineID = Integer.parseInt(line.charAt(0)+"");
+                                    if(currentLineID != entryID){
+                                        newFile.add(line);
+                                    }
+                                    deleteLine++;
+                                }
+                                Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), newFile);
+                            }else{
+                                FlowPane error = new FlowPane();
+                                Stage errorStage = new Stage();
+                                errorStage.setScene(new Scene(error, 200, 50));
+
+                                Label entryNotFound = new Label("No entry with this ID was found.");
+                                error.getChildren().addAll(entryNotFound);
+
+                                errorStage.show();
+                            }
+
+                        } catch (NumberFormatException | IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                });
+
+                removeEntryView.getChildren().addAll(instructions, instructions2, deleteEntry, delete);
+
 
                 removeEntryStage.show();
             }
