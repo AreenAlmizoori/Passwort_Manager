@@ -11,6 +11,13 @@ public class Entry {
         entryID++;
     }
 
+    public Entry(String application, String username, String password){
+        this.application = application;
+        this.username = username;
+        this.password = password;
+        entryID++;
+    }
+
     public String getApplication() {
         return application;
     }
