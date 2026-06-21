@@ -24,6 +24,8 @@ public class Category {
     public void removeEntry(Entry entry){
         if(contents.contains(entry)){
             contents.remove(entry);
+            int oldID = Entry.getEntryID();
+            Entry.setEntryID(oldID-1);
         }else{
             System.out.println("This category has no such entry.");
         }

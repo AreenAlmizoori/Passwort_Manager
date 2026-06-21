@@ -176,7 +176,7 @@ public class MainMenu extends Application {
                     viewStage.setMaxWidth(200);
                 }
                 while(labelsCreated < categoryEntries){
-                    Label newLabel = new Label("Entry " + (labelsCreated+1));
+                    Label newLabel = new Label("Entry " + (contents.get(labelsCreated).getId()));
                     Label websiteOrApp = new Label("Website/Application: " + contents.get(labelsCreated).getApplication());
                     Label username = new Label("Username: " + contents.get(labelsCreated).getUsername());
                     Label password = new Label("Password: " + contents.get(labelsCreated).getPassword());
@@ -223,17 +223,21 @@ public class MainMenu extends Application {
                                 }
                                 index++;
                             }
-                            int deleteLine = 0;
+                            int deleteLinePosition = 0;
 
                             if(foundEntry){
                                 List<String> newFile = new ArrayList<>();
-                                while(deleteLine < lines.size()){
-                                    String line = lines.get(deleteLine);
+                                while(deleteLinePosition < lines.size()){
+                                    String line = lines.get(deleteLinePosition);
+                                    String[] entryAttributes = line.split(",");
+                                    Entry currentEntry = new Entry(entryAttributes[1], entryAttributes[2], entryAttributes[3], Integer.parseInt(entryAttributes[0]));
                                     int currentLineID = Integer.parseInt(line.charAt(0)+"");
                                     if(currentLineID != entryID){
                                         newFile.add(line);
+                                    }else{
+                                        mainCat.removeEntry(currentEntry);
                                     }
-                                    deleteLine++;
+                                    deleteLinePosition++;
                                 }
                                 Files.write(Paths.get("src/textFiles/PasswordEntries.txt"), newFile);
                             }else{
@@ -247,8 +251,18 @@ public class MainMenu extends Application {
                                 errorStage.show();
                             }
 
-                        } catch (NumberFormatException | IOException e) {
-                            System.out.println(e.getMessage());
+                        } catch (NumberFormatException e) {
+                            FlowPane exception = new FlowPane();
+                            Stage exceptionStage = new Stage();
+                            exceptionStage.setScene(new Scene(exception, 300, 50));
+                            exceptionStage.setTitle("Error");
+
+                            Label errorText = new Label("Invalid input. Please make sure to type a number.");
+                            exception.getChildren().addAll(errorText);
+
+                            exceptionStage.show();
+                        }catch (IOException e){
+                            System.out.println("Error from reading/writing text. " + e.getMessage());
                         }
                     }
                 });
@@ -261,7 +275,7 @@ public class MainMenu extends Application {
         });
 
 
-        stage.setTitle("Password Manager");
+        stage.setTitle("Main Menu");
         stage.setScene(scene);
         stage.show();
     }
